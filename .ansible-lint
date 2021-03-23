@@ -1,0 +1,4 @@
+exclude_paths:
+ - ./molecule/
+use_default_rules: true
+verbosity: 1

@@ -1,0 +1,26 @@
+---
+- name: "Add Docker apt-key"
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+
+- name: "Add Docker apt-repository"
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu focal stable"
+    filename: "docker.list"
+    state: present
+    mode: 0644
+
+- name: "Install Docker package"
+  apt:
+    name:
+      - docker-{{ docker_edition }}
+      - docker-{{ docker_edition }}-cli
+      - containerd.io
+    state: latest
+
+- name: "Add users to the 'docker' group"
+  user:
+    name: "{{ user }}"
+    groups:
+     - docker

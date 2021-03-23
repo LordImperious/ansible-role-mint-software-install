@@ -1,0 +1,27 @@
+---
+user: "lordimperious"
+user_data_dir: "/home/{{ user }}"
+
+apt_update_packages: true
+apt_upgrade_os: true
+
+apt_install_packages: true
+pip_install_packages: true
+
+chrome_install: true
+vscode_install: true
+oh_my_zsh_install: true
+teamviewer_install: true
+anydesk_install: true
+anydesk_version: "6.1.0"
+
+docker_install: true
+docker_edition: "ce"
+
+docker_compose_install: true
+docker_compose_version: "1.28.5"
+
+hashicorp_install: true
+packer_version: "1.7.0"
+vagrant_version: "2.2.14"
+terraform_version: "0.14.8"

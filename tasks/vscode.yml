@@ -1,0 +1,17 @@
+---
+- name: "Set GPG key"
+  apt_key:
+    url: "https://packages.microsoft.com/keys/microsoft.asc"
+    state: present
+
+- name: "Add VSCode apt-repository"
+  apt_repository:
+    repo: "deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main"
+    filename: "vscode.list"
+    state: present
+    mode: 0644
+
+- name: "Install VSCode package"
+  apt:
+    name: code
+    update_cache: true

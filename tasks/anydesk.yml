@@ -1,0 +1,5 @@
+---
+- name: "Install AnyDesk a .deb package"
+  apt:
+    deb: "https://download.anydesk.com/linux/anydesk_{{ anydesk_version }}-1_amd64.deb"
+    state: present

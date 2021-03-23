@@ -1,0 +1,27 @@
+---
+- name: "Check that the .oh-my-zsh exists"
+  stat:
+    path: "{{ user_data_dir }}/.oh-my-zsh"
+  register: check_result
+
+- name: "Git clone Oh-My-Zsh for users"
+  command: "git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git {{ user_data_dir }}/.oh-my-zsh"
+  when: not check_result.stat.exists
+
+- name: "Set permissions of Oh-My-Zsh for users"
+  file:
+    path: "{{ user_data_dir }}/.oh-my-zsh"
+    mode: "go-w"
+    recurse: yes
+
+- name: "Set default shell for users"
+  user:
+    name: "{{ user }}"
+    shell: "/bin/zsh"
+
+- name: "Write .zshrc for users"
+  template:
+    src: zshrc.j2
+    dest: "{{ user_data_dir }}/.zshrc"
+    backup: yes
+    mode: 0775

@@ -1,0 +1,75 @@
+---
+- name: "Update all packages to their latest version"
+  apt:
+    name: "*"
+    state: latest
+  when:
+    - apt_update_packages
+
+- name: "Upgrade the OS to their latest version"
+  apt:
+    upgrade: dist
+  when:
+    - apt_upgrade_os
+
+- name: "Install packages"
+  apt:
+    name: "{{ apt_packages }}"
+    state: present
+  when:
+    - apt_install_packages
+
+- name: "Install Python packages"
+  pip:
+    name: "{{ pip_packages }}"
+    state: latest
+  when:
+    - pip_install_packages
+
+- name: "Import Oh-My-Zsh task"
+  include_tasks: "oh_my_zsh.yml"
+  when:
+    - oh_my_zsh_install
+
+- name: "Import VSCode task"
+  include_tasks: "vscode.yml"
+  when:
+    - vscode_install
+
+- name: "Import HashiCorp task"
+  include_tasks: "hashicorp.yml"
+  when:
+    - hashicorp_install
+
+- name: "Import Docker task"
+  include_tasks: "docker.yml"
+  when:
+    - docker_install
+
+- name: "Import Docker-Compose task"
+  include_tasks: "docker_compose.yml"
+  when:
+    - docker_compose_install
+
+- name: "Import AnyDesk task"
+  include_tasks: "anydesk.yml"
+  when:
+    - anydesk_install
+
+- name: "Import TeamViewer task"
+  include_tasks: "teamviewer.yml"
+  when:
+    - teamviewer_install
+
+- name: "Import Google Chrome task"
+  include_tasks: "chrome.yml"
+  when:
+    - chrome_install
+
+- name: "Remove useless packages from the cache"
+  apt:
+    autoclean: yes
+
+- name: "Remove dependencies that are no longer required"
+  apt:
+    autoremove: yes
