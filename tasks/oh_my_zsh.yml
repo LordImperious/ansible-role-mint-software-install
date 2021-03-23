@@ -8,6 +8,35 @@
   command: "git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git {{ user_data_dir }}/.oh-my-zsh"
   when: not check_result.stat.exists
 
+- name: "Check that the powerlevel10k exists"
+  stat:
+    path: "{{ user_data_dir }}/.oh-my-zsh/custom/themes/powerlevel10k"
+  register: check_result_powerlevel10k
+
+- name: "Git clone powerlevel10k for users"
+  command: "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git {{ user_data_dir }}/.oh-my-zsh/custom/themes/powerlevel10k"
+  when: not check_result_powerlevel10k.stat.exists
+
+#- name: clone oh-my-zsh for users
+#  become: yes
+#  become_user: '{{ item.username }}'
+#  git:
+#    repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+#    version: master
+#    dest: '~/.oh-my-zsh'
+#  with_items: '{{ users }}'
+#  when: users is defined
+#
+#- name: clone powerlevel10k for users
+#  become: yes
+#  become_user: '{{ item.username }}'
+#  git:
+#    repo: 'https://github.com/romkatv/powerlevel10k.git'
+#    version: master
+#    dest: '~/.oh-my-zsh/custom/themes/powerlevel10k'
+#  with_items: '{{ users }}'
+#  when: users is defined
+
 - name: "Set permissions of Oh-My-Zsh for users"
   file:
     path: "{{ user_data_dir }}/.oh-my-zsh"
@@ -25,3 +54,10 @@
     dest: "{{ user_data_dir }}/.zshrc"
     backup: yes
     mode: 0775
+
+- name: "Write .p10k.zsh for users"
+  copy:
+    src: .p10k.zsh
+    dest: "{{ user_data_dir }}/.p10k.zsh"
+    backup: yes
+    mode: 0755

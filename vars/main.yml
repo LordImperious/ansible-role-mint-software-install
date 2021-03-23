@@ -46,7 +46,7 @@ pip_packages:
   - molecule[ansible,vagrant,docker,lint]
   - cookiecutter
 
-oh_my_zsh_theme: agnoster
+oh_my_zsh_theme: powerlevel10k
 oh_my_zsh_plugins:
   - sudo
   - git
